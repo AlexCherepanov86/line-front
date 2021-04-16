@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import * as React from "react";
+import { Admin, Resource } from 'react-admin';
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import {LineDataTable} from './dataTable/LineDataTable'
+import dataProvider from './dataProvider/dataprovider'
+// import simpleRestProvider from 'ra-data-simple-rest';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Admin
+          title="система"
+          // dataProvider={simpleRestProvider('http://127.0.0.1:3005/api')}
+          dataProvider={dataProvider}
+          // layout={Layout}
+      >
+          <Resource
+              name="lines"
+              list={LineDataTable}
+              options={{ label: 'Список ', icon: <ListAltRoundedIcon />}}
+          />
+
+      </Admin>
   );
 }
 
