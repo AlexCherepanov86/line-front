@@ -9,9 +9,9 @@ export const LineDataTable = (props) => (
           sort={{field: 'gameid', order: 'desc' }}
     >
         <Datagrid>
+            <TextField source="gameid" />
             <TextField source="league" />
             <DateField source="starttime" />
-            <TextField source="gameid" />
             <TextField source="t1" />
             <TextField source="t2" />
             <TextField source="w1" />

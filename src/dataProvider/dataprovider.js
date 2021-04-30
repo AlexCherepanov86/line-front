@@ -12,18 +12,26 @@ export default {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
        console.log(params.sort)
-        const query = {
-            sort: JSON.stringify([field, order]),
-//             sort: JSON.stringify([{'column: ${params.sort.field}', order}]),
+//         const query = {
+//             sort: JSON.stringify([field, order]),
+// //             sort: JSON.stringify([{'column: ${params.sort.field}', order}]),
 //             range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-            perpage: JSON.stringify(perPage),
-//             filter: JSON.stringify(params.filter),
+//             perpage: JSON.stringify(perPage),
+// //             filter: JSON.stringify(params.filter),
+//         };
+        const query = {
+            ...fetchUtils.flattenObject(params.filter),
+            sort: field,
+            order: order,
+            start: (page - 1) * perPage,
+            end: page * perPage,
+            perpage: perPage,
         };
         const url = `${apiUrl}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
-            total: parseInt(headers.get('content-range').split('/').pop(), 10),
+            total: parseInt(headers.get('Content-Range').split('/').pop(), 10)
         }));
     },
 }
